@@ -1,0 +1,71 @@
+Computation of steady states for a system of non-linear ODEs.
+
+
+Calculating stable and unstable steady states:
+data-bifurcation-diagrams.py
+	Python code calculating the steady states and their stability for non-linear ODEs with different parameter sets. Multiple parameter sets are simulated, then results are exported to csv files in a directory (named 'data-files') created by the script. 
+
+data-bif-zoom.py
+	Similar to 'data-bifurcation-diagrams.py'. Smaller regions of A* within select bifurcation diagrams are now analysed. Results are exported to csv files.
+
+hms-sigmoid-data.py
+	Python code calculating the steady states and number of stable steady states for different parameter sets (varying n, a, b, A*). Results are exported to csv files.
+
+hms-modified-sigmoid-data.py
+	Similar to hms-modified-sigmoid-data.py, except lambda is vertically displaced (it is still sigmoidal). Also, only the number of stable steady states are calculated and the Hill coefficient, n, is no longer varied. Results are exported to a csv file.
+
+hms-theta-data.py
+	Python code calculating the number of stable steady states for different parameter sets (varying thetaA, thetaB and A*). Results are exported to a csv file.
+
+hms-linear-data.py
+	Similar to hms-modified-sigmoid-data.py, except only lambda is now modelled as a linear function and n is no longer varied. Results are exported to a csv file.
+
+hms-attractor-transitions-data.py
+	Python code calculating the minimum distance between central attractor(s) and extreme stable steady states (for 3 or 4 attractor landscapes) or between two neighbouring attractors (for bistable landscapes); in monostable landscapes no metric is calculated. Script uses data from hms-sigmoid-data.py (with n=4) to input the stable steady states and then calculate the distance. 
+
+
+Plotting figures:
+plot_bif_diagrams.m
+	Matlab script plots the output of 'data-bifurcation-diagrams.py'. All figures are saved in Scalable Vector Graphics format.
+
+plot_zoomed_bif.m
+	Matlab script plots the output of 'data-bif-zoom.py'. All figures are saved in Scalable Vector Graphics format.
+
+plot_hm_sigmoid.m
+	Matlab script plots the output of 'hms-sigmoid-data.py'. All figures are saved in Scalable Vector Graphics format.
+
+plot_hm_modified_sigmoid.m
+	Matlab script plots the output of 'hms-modified-sigmoid-data.py'. All figures are saved in Scalable Vector Graphics format.
+
+plot_hms_theta.m
+	Matlab script plots the output of 'hms-theta-data.py'. All figures are saved in Scalable Vector Graphics format.
+
+plot_hm_linear.m
+	Matlab script plots the output of 'hms-linear-data.py'. All figures are saved in Scalable Vector Graphics format.
+
+plot_hm_attractor_transitions.m
+	Matlab script plots the output of 'hms-attractor-transitions-data.py'. All figures are saved in Scalable Vector Graphics format.
+
+plot_arrays.m
+	Matlab script plots arrays displaying re-entrant behaviour using the output of 'hms-sigmoid-data.py'. All figures are saved in Scalable Vector Graphics format.
+
+plot_example_phase_portraits.m	
+	Matlab script plots example phase portraits used to show the behaviour contained within each heatmap. 
+
+plot_example_time_dependent_simulations.m
+	Matlab script plots time-dependent simulations to show the behaviour presented in each bifurcation diagram. 
+
+plot_lambda_functions.m
+	Matlab script plots sigmoidal, linear and a modified sigmoid form of lambda used in the above python scripts. 
+
+All figures were completed to their final form in LaTex using TikZ and Adobe Illustrator.
+
+
+
+Stability Checks:
+steady_states_calculator.mw
+	Maple script calculates the roots of the system of non-linear ODEs for a fixed parameter set for A* between 0-1 in 0.1 steps. 
+
+steady_state_stability_check.m
+	Matlab script checks a steady state (entered manually) from 'steady_states_calculator.mw' or calculated in the above python files using the Jacobian.
+
