@@ -49,16 +49,16 @@ plot_hm_attractor_transitions.m
 plot_arrays.m
 	Matlab script plots arrays displaying re-entrant behaviour using the output of 'hms-sigmoid-data.py'. All figures are saved in Scalable Vector Graphics format.
 
-plot_example_phase_portraits.m	
-	Matlab script plots example phase portraits used to show the behaviour contained within each heatmap. 
+plot-example-phase-portraits.py
+	Python script plots example phase portraits used to show the behaviour contained within each heatmap. 
 
-plot_example_time_dependent_simulations.m
-	Matlab script plots time-dependent simulations to show the behaviour presented in each bifurcation diagram. 
+plot-example-timedependent-simulations.py
+	Python script plots time-dependent simulations to show the behaviour presented in each bifurcation diagram. 
 
 plot_lambda_functions.m
 	Matlab script plots sigmoidal, linear and a modified sigmoid form of lambda used in the above python scripts. 
 
-All figures were completed to their final form in LaTex using TikZ and Adobe Illustrator.
+All figures were completed to their final form in LaTex using TikZ and Inkscape.
 
 
 
