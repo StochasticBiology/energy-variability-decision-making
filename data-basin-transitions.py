@@ -1,4 +1,4 @@
-#  script calculates the ...
+#  script calculates the minimum work needed to transition between extreme attractor basin.
 
 # import modules and functinons
 import os
@@ -44,8 +44,7 @@ epsilon = 0.005
 
 
 # create a directory for script outputs, after first checking if it already exists
-# create a directory for script outputs, after first checking if it already exists
-# dataDirectoryLocation = '/Users/rdk316/Dropbox/PhD/publications/energy_variability_decision_making/sci-reports/initial-submission-reviewed/figure-files'
+# change 'dataDirectoryLocation' to correct location
 dataDirectoryLocation = 'U:/PhD/energy_decisions_manuscript/updated-files'
 os.chdir(dataDirectoryLocation)
 dataDirectoryName = './data-files'
@@ -63,18 +62,17 @@ attractorDistanceDataframe = pd.DataFrame(
                        'Energy', 'MinimumTransitionDistance'])
 
 # loop through a, b and A*
-aSteps = np.array([0, 0.5, 1, 1.5, 2, 3])  #np.array([3])  #
-start = time.time()
+aSteps = np.array([0, 0.5, 1, 1.5, 2, 3])
 for aStep in range(len(aSteps)):
     a = aSteps[aStep]
     print('\na = ' + str(a))
 
-    bSteps = np.linspace(0, 3, 13)  #np.array([2.75, 3])  #
+    bSteps = np.linspace(0, 3, 13)
     for bStep in range(len(bSteps)):
         b = bSteps[bStep]
         print('b = ' + str(b))
 
-        energySteps = np.linspace(0, 1, 11)  # np.array([0.4])  #
+        energySteps = np.linspace(0, 1, 11)
         for step in range(len(energySteps)):
             energy = round(energySteps[step], 4)
             lambdaValue = lambdaFunction(energy)
@@ -96,6 +94,7 @@ for aStep in range(len(aSteps)):
 
             # 2 ATTRACTORS
             elif attractorStatesDataSize == 2:
+                # label attractors
                 for g in range(attractorStatesDataSize):
                     # print([attractorStatesData.iloc[g][7], attractorStatesData.iloc[g][8]])
                     if (attractorStatesData.iloc[g][7] > attractorStatesData.iloc[g][8]):
@@ -177,6 +176,7 @@ for aStep in range(len(aSteps)):
                     # print([startBasin, endBasin])
                     minDistances2.append(MinimumTransitionDistance)
 
+                # find minimum
                 MinimumTransitionDistance = min(minDistances2)
 
                 # populate minimum transition distance dataframe
@@ -185,6 +185,7 @@ for aStep in range(len(aSteps)):
 
             # 3 ATTRACTORS
             elif attractorStatesDataSize == 3:
+                # label attractors
                 for g in range(attractorStatesDataSize):
                     if (attractorStatesData.iloc[g][7] == attractorStatesData.iloc[g][8]):
                         attractor1 = np.array(
@@ -251,10 +252,6 @@ for aStep in range(len(aSteps)):
                     # sub-dataframe of ics going to other attractors
                     subDataFrame = dataframe1.loc[(dataframe1['AttractorLabel'] != m)]
 
-                    # # create dataframe
-                    # dataframe2 = pd.DataFrame(
-                    #     index=[], columns=['BasinLabelStart', 'BasinLabelEnd', 'Distance'])
-
                     # oldLoopList = list(range(attractorStatesDataSize))
                     newLoopList = [i for i in list(range(attractorStatesDataSize)) if i != m]
                     # print([m, newLoopList])
@@ -282,6 +279,7 @@ for aStep in range(len(aSteps)):
 
                         # print(dataframe2)
 
+                        # find minimum distance
                         MinimumTransitionDistance = dataframe2['Distance'].min()
                         MinimumTransitionDistanceRow = dataframe2['Distance'].idxmin()
 
@@ -293,6 +291,7 @@ for aStep in range(len(aSteps)):
                                                            endBasin, MinimumTransitionDistance]
                 # print(dataframe3)
 
+                # calculate transition routes & distances
                 distance0to1Row = dataframe3.loc[(dataframe3['StartBasin'] == 0) & (
                     dataframe3['EndBasin'] == 1)]
                 distance0to1 = distance0to1Row.iloc[0, 2]
@@ -312,14 +311,12 @@ for aStep in range(len(aSteps)):
                     dataframe3['EndBasin'] == 1)]
                 distance2to1 = distance2to1Row.iloc[0, 2]
 
-                # print('\n\n')
-                # print([distance0to1, distance0to2, distance1to2,
-                #        distance1to0, distance2to0, distance2to1])
-
                 distance0to1to2 = distance0to1 + distance1to2
                 distance2to1to0 = distance2to1 + distance1to0
 
                 distancesToBasins = [distance0to1to2, distance2to1to0, distance0to2, distance2to0]
+
+                # find minimum
                 MinimumTransitionDistance = min(distancesToBasins)
 
                 # populate minimum transition distance dataframe
@@ -327,6 +324,7 @@ for aStep in range(len(aSteps)):
                                                                                    energy, MinimumTransitionDistance]
             # 4 ATTRACTORS
             else:
+                # label attractors
                 centralAttractorList = []
                 centralAttractorRowList = []
                 for g in range(attractorStatesDataSize):
@@ -396,11 +394,6 @@ for aStep in range(len(aSteps)):
                 dataframe3 = pd.DataFrame(
                     index=[], columns=['StartBasin', 'EndBasin', 'MinDistance'])
 
-                # # index of central and extreme attractors defined initially
-                # centralAttractorList2 = [1, 2]
-                # extremeAttractorList = [i for i in list(
-                #     range(attractorStatesDataSize)) if i not in centralAttractorList2]
-
                 # loop through to calculate sub-dataframes
                 for m in range(attractorStatesDataSize):  # np.array([1, 2]):
                     currentAttractor = globals()['attractor' + str(m)]
@@ -451,6 +444,7 @@ for aStep in range(len(aSteps)):
 
                 # print(dataframe3)
 
+                # calculate transition routes & distances
                 distance0to3Row = dataframe3.loc[(dataframe3['StartBasin'] == 0) & (
                     dataframe3['EndBasin'] == 3)]
                 distance0to3 = distance0to3Row.iloc[0, 2]
@@ -486,12 +480,6 @@ for aStep in range(len(aSteps)):
                     dataframe3['EndBasin'] == 2)]
                 distance3to2 = distance3to2Row.iloc[0, 2]
 
-                # print('\n\n')
-                # print([distance0to3, distance3to0])
-                # print('\n\n')
-                # print([distance0to1, distance0to2, distance1to0, distance2to0,
-                #        distance2to3, distance1to3, distance3to2, distance3to1])
-
                 distance0to1to3 = distance0to1 + distance1to3
                 distance3to1to0 = distance3to1 + distance1to0
 
@@ -504,48 +492,15 @@ for aStep in range(len(aSteps)):
 
                 # print(distancesToBasins)
 
+                # find minimum
                 MinimumTransitionDistance = min(distancesToBasins)
 
                 # populate minimum transition distance dataframe
                 attractorDistanceDataframe.loc[len(attractorDistanceDataframe)] = [a, b, k, n, thetaA, thetaB,
                                                                                    energy, MinimumTransitionDistance]
-    end = time.time()
-    print(end - start)
 
 print(attractorDistanceDataframe)
 
 # export dataframes to csv files (without index col)
 csvFileName = "data-files/sigmoid-n%.0f-extreme-basin-transition-dist-NEW.csv" % n
 export_Dataframe = attractorDistanceDataframe.to_csv(csvFileName, index=False, header=True)
-
-# """
-# plot_null_clines
-# """
-#
-# # fixed parameters
-# a = 1
-# b = 1
-# k = 1
-# n = 4
-# thetaA = 0.5
-# thetaB = 0.5
-# energy = 0.7
-# lambdaValue = lambdaFunction(energy)
-#
-#
-# def x1Dot(X, t=0):
-#     return lambdaValue*a*X[0]**n/(thetaA**n+X[0]**n) + lambdaValue * b*thetaB**n/(thetaB**n+X[1]**n)-k*X[0]
-#
-#
-# def x2Dot(X, t=0):
-#     return lambdaValue*a*X[1]**n/(thetaA**n+X[1]**n) + lambdaValue * b*thetaB**n/(thetaB**n+X[0]**n)-k*X[1]
-#
-#
-# R, F = np.meshgrid(np.arange(0, 5, .1), np.arange(0, 5, .1))
-# dR = x1Dot([R, F])
-# dF = x2Dot([R, F])
-# contour1 = py.contour(R, F, dR, levels=[0], linewidths=3, colors='black')
-# contour2 = py.contour(R, F, dF, levels=[0], linewidths=3, colors='black')
-# # plt.plot(attractorStatesData.iloc[1][7], attractorStatesData.iloc[1][8], 'bo')
-#
-# plt.xlim
